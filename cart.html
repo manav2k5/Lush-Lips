@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Lush Lips</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', sans-serif;
+        }
+
+        body {
+            background-color: #fff7f2;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #880e4f;
+            padding: 15px 0;
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+        }
+
+        header ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        header ul li {
+            font-size: 1rem;
+        }
+
+        header ul li a {
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        header ul li a:hover {
+            background-color: #e91e63;
+        }
+
+        /* Cart Page Styles */
+        .cart-container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #880e4f;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .cart-item-title {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .cart-item-shade {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .cart-item-price {
+            font-size: 1.2rem;
+            color: #880e4f;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .remove-item {
+            color: #e91e63;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quantity input {
+            width: 40px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .checkout-btn {
+            background-color: #880e4f;
+            color: white;
+            padding: 15px;
+            border: none;
+            width: 100%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #5b236e;
+        }
+
+        /* Footer */
+#footer {
+    background: #f9f0ed; /* Light background like the screenshot */
+    padding: 40px 10%;
+    color: #4a4a4a;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    flex: 1;
+    margin: 20px;
+    min-width: 250px; /* Ensure proper spacing on small screens */
+}
+
+.about p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4a4a4a;
+}
+
+.footer-logo {
+    max-width: 150px;
+    margin-bottom: 15px;
+}
+
+.policies h4, .newsletter h4 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.policies ul {
+    list-style: none;
+    padding: 0;
+}
+
+.policies ul li {
+    margin-bottom: 10px;
+}
+
+.policies ul li a {
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.policies ul li a:hover {
+    color: #880e4f; /* Add some hover effect */
+}
+
+.newsletter form {
+    display: flex;
+    flex-direction: column;
+}
+
+.newsletter input[type="email"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.newsletter button {
+    background-color: #5b236e;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.newsletter button:hover {
+    background-color: #9b6dc8;
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #880e4f;
+    margin-bottom: 30px;
+}
+
+/* Product Actions */
+.product-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.product-actions button {
+    background-color: #880e4f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-actions button:hover {
+    background-color: #5b236e;
+}
+
+/* Footer Styles (Reused from earlier) */
+
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    color: #999;
+    font-size: 0.85rem;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Lush Lips</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Cart Page -->
+    <div class="cart-container">
+        <h2 class="cart-title">Your Cart</h2>
+
+        <!-- Cart Item 1 -->
+        <div class="cart-item">
+            <img src="1.jpg" alt="Lipstick Image">
+            <div class="cart-item-details">
+                <div class="cart-item-title">Crimson Crush</div>
+                <div class="cart-item-shade">Shade: Red</div>
+                <div class="cart-item-price">$20.00</div>
+            </div>
+            <div class="cart-actions">
+                <div class="quantity">
+                    <button>-</button>
+                    <input type="number" value="1">
+                    <button>+</button>
+                </div>
+                <div class="remove-item">Remove</div>
+            </div>
+        </div>
+
+        <!-- Cart Item 2 -->
+        <div class="cart-item">
+            <img src="2.jpg" alt="Lipstick Image">
+            <div class="cart-item-details">
+                <div class="cart-item-title">Berry Bliss</div>
+                <div class="cart-item-shade">Shade: Purple</div>
+                <div class="cart-item-price">$22.00</div>
+            </div>
+            <div class="cart-actions">
+                <div class="quantity">
+                    <button>-</button>
+                    <input type="number" value="1">
+                    <button>+</button>
+                </div>
+                <div class="remove-item">Remove</div>
+            </div>
+        </div>
+
+        <!-- Checkout Button -->
+        <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="footer-container">
+        <div class="footer-column about">
+            <img src="logo.jpg" alt="Logo" class="footer-logo">
+            <p>At Lush Lips, we’re all about lips that pop and feel great! Founded by content creator Mrunal, our clean, cruelty-free lipsticks are designed with skincare in mind – velvety, hydrating, and packed with nourishing ingredients. Discover shades that bring out your best self, all with a formula that loves your lips back.</p>
+        </div>
+        <div class="footer-column policies">
+            <h4>Policies</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Shipping Policy</a></li>
+                <li><a href="#">Contact Information</a></li>
+            </ul>
+        </div>
+        <div class="footer-column newsletter">
+            <h4>Subscribe to our newsletter</h4>
+            <form>
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© Lush Lips • Powered by Shopify</p>
+    </div>
+</footer>
+
+
+
+</body>
+</html>
